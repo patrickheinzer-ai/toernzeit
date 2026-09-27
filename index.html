@@ -11,22 +11,23 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_CH">
 <meta property="og:url" content="https://toernzeit.ch/">
-<meta property="og:image" content="https://toernzeit.ch/bilder/hero-portisco.jpg">
+<meta property="og:image" content="https://toernzeit.ch/bilder/hero-amwind.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0A1C27">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A1C27'/%3E%3Cpath d='M8 38c8-10 16-10 24 0s16 10 24 0' fill='none' stroke='%2345C2AE' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#F7F4EE">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1F2B'/%3E%3Cpath d='M8 38c8-10 16-10 24 0s16 10 24 0' fill='none' stroke='%2345C2AE' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preload" href="schrift/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <style>
   /* Archivo (SIL Open Font License), selbst gehostet: keine Anfragen an Google */
   @font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:100 900;font-stretch:62% 125%;src:url(schrift/archivo.woff2) format("woff2-variations")}
   :root{
-    --nacht:#07141C;      /* Seitenhintergrund, blaue Stunde */
-    --tiefe:#0A1C27;      /* Flächen */
-    --planke:#12303F;     /* Karten, Linien hell */
-    --tuch:#EFEADF;       /* Segeltuch: Text */
-    --dunst:#9DB0B8;      /* Sekundärtext */
-    --smeraldo:#45C2AE;   /* Akzent: Wasser der Costa Smeralda */
-    --linie:rgba(239,234,223,.14);
+    --nacht:#F7F4EE;      /* Seitenhintergrund: Segeltuch */
+    --tiefe:#EDF2F4;      /* Flächen: heller Dunst */
+    --planke:#FFFFFF;     /* Karten */
+    --tuch:#0B1F2B;       /* Text: Tiefsee */
+    --dunst:#55707C;      /* Sekundärtext */
+    --smeraldo:#128F7E;   /* Akzent: Wasser der Costa Smeralda */
+    --smeraldo-hell:#45C2AE;
+    --linie:rgba(11,31,43,.12);
     --font:"Archivo","Helvetica Neue",Arial,sans-serif;
     --rand:clamp(20px,5vw,64px);
   }
@@ -46,22 +47,22 @@
 
   /* Knöpfe */
   .knopf{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 1.5rem;border-radius:999px;font-weight:600;font-size:.98rem;text-decoration:none;border:1.5px solid transparent;transition:background .2s,color .2s,border-color .2s;cursor:pointer}
-  .knopf.voll{background:var(--smeraldo);color:var(--nacht)}
-  .knopf.voll:hover{background:var(--tuch)}
-  .knopf.rand{border-color:rgba(239,234,223,.5);color:var(--tuch)}
-  .knopf.rand:hover{border-color:var(--tuch);background:rgba(239,234,223,.08)}
+  .knopf.voll{background:var(--smeraldo);color:#fff}
+  .knopf.voll:hover{background:var(--tuch);color:#fff}
+  .knopf.rand{border-color:rgba(11,31,43,.35);color:var(--tuch)}
+  .knopf.rand:hover{border-color:var(--tuch);background:rgba(11,31,43,.06)}
 
   /* Kopfzeile */
   header{position:fixed;inset:0 0 auto 0;z-index:40;transition:background .25s,border-color .25s;border-bottom:1px solid transparent}
-  header.fest{background:rgba(7,20,28,.9);backdrop-filter:blur(12px);border-color:var(--linie)}
+  header.fest{background:rgba(247,244,238,.92);backdrop-filter:blur(12px);border-color:var(--linie)}
   .leiste{display:flex;align-items:center;justify-content:space-between;height:76px;gap:1.5rem}
   .marke{display:flex;align-items:center;gap:.55rem;text-decoration:none;font-stretch:62%;font-weight:800;font-size:1.7rem;letter-spacing:.01em}
   .marke svg{width:34px;height:20px;flex:none}
   nav.haupt{display:flex;gap:2rem;font-size:.95rem;font-weight:500}
-  nav.haupt a{text-decoration:none;color:rgba(239,234,223,.82);padding:.4rem 0;border-bottom:1.5px solid transparent}
+  nav.haupt a{text-decoration:none;color:rgba(11,31,43,.8);padding:.4rem 0;border-bottom:1.5px solid transparent}
   nav.haupt a:hover{color:var(--tuch);border-color:var(--smeraldo)}
   .rechts{display:flex;align-items:center;gap:.8rem}
-  .menue{display:none;width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(239,234,223,.4);background:none;color:var(--tuch);cursor:pointer;font-size:0}
+  .menue{display:none;width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(11,31,43,.35);background:none;color:var(--tuch);cursor:pointer;font-size:0}
   .menue span,.menue span::before,.menue span::after{display:block;width:18px;height:2px;background:currentColor;margin:auto;position:relative;content:""}
   .menue span::before{position:absolute;top:-6px}.menue span::after{position:absolute;top:6px}
   @media(max-width:900px){
@@ -74,14 +75,14 @@
 
   /* Hero */
   .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;isolation:isolate;overflow:hidden}
-  .hero picture,.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%;z-index:-2}
+  .hero picture,.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 45%;z-index:-2}
   .hero::after{content:"";position:absolute;inset:0;z-index:-1;background:
-    linear-gradient(180deg,rgba(7,20,28,.55) 0%,rgba(7,20,28,0) 28%),
-    linear-gradient(0deg,var(--nacht) 0%,rgba(7,20,28,.78) 30%,rgba(7,20,28,.1) 62%)}
+    linear-gradient(180deg,rgba(247,244,238,.35) 0%,rgba(247,244,238,0) 22%),
+    linear-gradient(0deg,var(--nacht) 0%,rgba(247,244,238,.92) 22%,rgba(247,244,238,.55) 45%,rgba(247,244,238,0) 70%)}
   .hero .innen>*{min-width:0}
   .hero .innen{width:100%;padding-block:120px clamp(40px,7vh,84px);display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:end}
   .hero h1{font-size:clamp(5rem,17vw,15rem);line-height:.8;margin-left:-.04em;text-wrap:balance}
-  .hero p{font-size:clamp(1.05rem,1.6vw,1.3rem);max-width:46ch;margin:1.8rem 0 2rem;color:rgba(239,234,223,.9)}
+  .hero p{font-size:clamp(1.05rem,1.6vw,1.3rem);max-width:46ch;margin:1.8rem 0 2rem;color:var(--tuch)}
   .hero .knoepfe{display:flex;flex-wrap:wrap;gap:.8rem}
 
   /* Die Uhr: das eine laute Element */
@@ -91,6 +92,7 @@
   .uhr .ziel{color:var(--dunst);font-size:.95rem;margin-top:.15rem}
   .uhr .rest{font-variant-numeric:tabular-nums;color:var(--tuch);font-size:.95rem;margin-top:.7rem}
   @media(max-width:900px){
+    .hero::after{background:linear-gradient(0deg,var(--nacht) 0%,rgba(247,244,238,.94) 30%,rgba(247,244,238,.7) 52%,rgba(247,244,238,0) 78%)}
     .hero .innen{grid-template-columns:1fr;gap:2.2rem}
     .uhr{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;min-width:0}
     .uhr .zahl{font-size:3.6rem}
@@ -127,11 +129,12 @@
   /* Törns */
   .toerns{background:var(--tiefe)}
   .toernliste{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,40px);margin-top:3.5rem}
-  .toern{display:flex;flex-direction:column;background:var(--planke);border-radius:6px;overflow:hidden;text-decoration:none}
+  .toern{display:flex;flex-direction:column;background:var(--planke);border:1px solid var(--linie);border-radius:6px;overflow:hidden;text-decoration:none;transition:box-shadow .3s}
+  .toern:hover{box-shadow:0 18px 40px -24px rgba(11,31,43,.35)}
   .toern .bild{position:relative;aspect-ratio:16/10;overflow:hidden}
   .toern .bild img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
   .toern:hover .bild img{transform:scale(1.04)}
-  .toern .art{position:absolute;left:16px;top:16px;background:var(--nacht);color:var(--tuch);font-size:.82rem;font-weight:600;padding:.35rem .8rem;border-radius:999px}
+  .toern .art{position:absolute;left:16px;top:16px;background:var(--tuch);color:#fff;font-size:.82rem;font-weight:600;padding:.35rem .8rem;border-radius:999px}
   .toern .text{padding:1.8rem;display:flex;flex-direction:column;gap:.8rem;flex:1}
   .toern .datum{color:var(--smeraldo);font-weight:600;font-size:1rem}
   .toern p{color:var(--dunst)}
@@ -141,19 +144,38 @@
   .toern .mehr{font-weight:600;border-bottom:1.5px solid var(--smeraldo);padding-bottom:2px}
   @media(max-width:760px){.toernliste{grid-template-columns:1fr}}
 
-  /* Aja */
-  .aja{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;margin-top:clamp(20px,3vw,40px);padding:2rem;border:1px solid var(--linie);border-radius:6px}
-  .aja p{color:var(--dunst);max-width:60ch;margin-top:.6rem}
-  .aja .knopf[aria-disabled="true"]{opacity:.55;cursor:default;pointer-events:none}
-  @media(max-width:760px){.aja{grid-template-columns:1fr}}
 
   /* Skipper */
   .skipper .innen{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(32px,6vw,90px);align-items:center}
-  .skipper img{border-radius:6px;aspect-ratio:4/3;object-fit:cover;width:100%}
+  .skipper img{border-radius:6px;box-shadow:0 24px 50px -30px rgba(11,31,43,.45);aspect-ratio:4/3;object-fit:cover;width:100%}
   .skipper p{color:var(--dunst);margin-top:1.1rem;max-width:56ch}
   .skipper p.name{color:var(--smeraldo);font-weight:600;margin:0 0 .6rem}
-  .hinweis{background:rgba(69,194,174,.12);border-left:2px solid var(--smeraldo);padding:.7rem 1rem;color:var(--tuch)!important;font-size:.95rem}
+  .hinweis{background:rgba(18,143,126,.1);border-left:2px solid var(--smeraldo);padding:.7rem 1rem;color:var(--tuch)!important;font-size:.95rem}
   @media(max-width:860px){.skipper .innen{grid-template-columns:1fr}}
+  .werdegang{margin-top:clamp(48px,7vw,90px);display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(32px,6vw,90px)}
+  .werdegang h3{margin-bottom:1.4rem}
+  .werdegang ol,.werdegang ul{list-style:none}
+  .werdegang li{display:grid;grid-template-columns:7.5rem 1fr auto;gap:1rem;padding:.85rem 0;border-top:1px solid var(--linie);font-size:.98rem;align-items:baseline}
+  .werdegang li:last-child{border-bottom:1px solid var(--linie)}
+  .werdegang .wann{color:var(--smeraldo);font-weight:600;font-variant-numeric:tabular-nums}
+  .werdegang .was b{display:block;font-weight:600}
+  .werdegang .was span{color:var(--dunst);font-size:.92rem}
+  .werdegang .sm{font-stretch:62%;font-weight:800;font-size:1.35rem;white-space:nowrap}
+  .werdegang .sm small{display:block;font-stretch:100%;font-weight:400;font-size:.78rem;color:var(--dunst);text-align:right}
+  .werdegang .ausweise li{grid-template-columns:1fr auto}
+  .werdegang .ausweise .wann{text-align:right}
+  .werdegang p.fuss{color:var(--dunst);font-size:.92rem;margin-top:1rem;max-width:60ch}
+  .werdegang .summe{margin-bottom:1.4rem;display:flex;gap:2rem}
+  .werdegang .summe div{font-stretch:62%;font-weight:800;font-size:2.4rem;line-height:1}
+  .werdegang .summe small{display:block;font-stretch:100%;font-weight:400;font-size:.9rem;color:var(--dunst);margin-top:.3rem}
+  @media(max-width:860px){
+    .werdegang{grid-template-columns:1fr}
+    .werdegang li{grid-template-columns:5.5rem 1fr auto;gap:.7rem}
+  }
+  @media(max-width:480px){
+    .werdegang li{grid-template-columns:1fr auto}
+    .werdegang ol .wann{grid-column:1/-1;font-size:.85rem;padding-bottom:.1rem}
+  }
 
   /* Fragen */
   .fragen{background:var(--tiefe)}
@@ -210,7 +232,7 @@
 <main id="top">
 
   <section class="hero">
-    <img class="bg" src="bilder/hero-portisco.jpg" alt="Der Hafen von Portisco bei Olbia in der blauen Stunde, Ausgangspunkt der Sardinien-Törns" fetchpriority="high">
+    <img class="bg" src="bilder/hero-amwind.jpg" alt="Am Wind vor der Küste: Gischt über dem Vorschiff, Sonne und tiefblaues Meer" fetchpriority="high">
     <div class="innen">
       <div>
         <h1>Törnzeit.</h1>
@@ -286,7 +308,7 @@
           </div>
         </a>
 
-        <a class="toern" href="sardinien-korsika-2027/">
+        <a class="toern" href="sardinien-korsika-2027/woche-2/">
           <div class="bild">
             <img src="bilder/bonifacio.jpg" alt="Die Kreideklippen von Bonifacio auf Korsika" loading="lazy">
             <span class="art">Feriensegeln</span>
@@ -302,14 +324,6 @@
           </div>
         </a>
       </div>
-
-      <div class="aja" id="aya">
-        <div>
-          <h3>aya reservieren</h3>
-          <p>Für die Crew der aya, unserer Jantar 21: Halbtage, Abende oder ganze Tage im Kalender eintragen.</p>
-        </div>
-        <a class="knopf rand" href="https://reservierung.timber-frame.ch/">Zur Reservierung</a>
-      </div>
     </div>
   </section>
 
@@ -319,9 +333,38 @@
       <div>
         <p class="name">Dein Skipper</p>
         <h2>Patrick Heinzer</h2>
-        <p>Ich segle seit vielen Jahren im Mittelmeer und nehme am liebsten Crews mit, in denen Erfahrene und Neulinge zusammen an Bord sind. Ruhig, gut vorbereitet und ohne Drill: Jede und jeder darf ans Steuer, niemand muss.</p>
+        <p>Ich segle seit vielen Jahren, vor allem im Mittelmeer und auf dem Atlantik, und nehme am liebsten Crews mit, in denen Erfahrene und Neulinge zusammen an Bord sind. Ruhig, gut vorbereitet und ohne Drill: Jede und jeder darf ans Steuer, niemand muss.</p>
         <p>Zu Hause bin ich in Hünenberg See am Zugersee. Wenn ich nicht auf dem Wasser bin, stehe ich in der Werkstatt und baue Möbel aus Massivholz.</p>
-        <p class="hinweis">Platzhalter: hier Ausweise, Seemeilen, Reviere und ein Porträtfoto ergänzen.</p>
+      </div>
+    </div>
+
+    <div class="innen werdegang">
+      <div>
+        <h3>Nautischer Werdegang</h3>
+        <div class="summe">
+          <div>2400<small>Seemeilen seit 2016</small></div>
+          <div>60<small>Tage auf See</small></div>
+        </div>
+        <ol>
+          <li><span class="wann">Mai 2025</span><span class="was"><b>Teneriffa – Azoren</b><span>Meilentörn, Co-Skipper, 14 Tage</span></span><span class="sm">900<small>sm</small></span></li>
+          <li><span class="wann">Juli 2024</span><span class="was"><b>Skippertraining St. Malo</b><span>Crewmitglied, 7 Tage</span></span><span class="sm">150<small>sm</small></span></li>
+          <li><span class="wann">Mai 2024</span><span class="was"><b>Mallorca – Korsika – Sardinien</b><span>Meilentörn, Crewmitglied, 14 Tage</span></span><span class="sm">500<small>sm</small></span></li>
+          <li><span class="wann">Okt. 2023</span><span class="was"><b>Sukošan, Kroatien</b><span>Crewmitglied, 10 Tage</span></span><span class="sm">500<small>sm</small></span></li>
+          <li><span class="wann">Mai 2021</span><span class="was"><b>Šibenik, Kroatien</b><span>Crewmitglied, 8 Tage</span></span><span class="sm">200<small>sm</small></span></li>
+          <li><span class="wann">Juli 2016</span><span class="was"><b>Hawaii</b><span>Crewmitglied, 7 Tage</span></span><span class="sm">150<small>sm</small></span></li>
+        </ol>
+        <p class="fuss">Alle Meilenangaben sind gerundet. Vor 2016 kamen verschiedene Ferientörns dazu, zu denen ich heute keine verlässlichen Angaben mehr habe.</p>
+      </div>
+      <div>
+        <h3>Nautische Ausweise</h3>
+        <ul class="ausweise">
+          <li><span class="was"><b>Swiss Offshore Skipper</b><span>Sailing Yacht</span></span><span class="wann">2024</span></li>
+          <li><span class="was"><b>Hochseeschein Segel</b></span><span class="wann">2024</span></li>
+          <li><span class="was"><b>Hochseeschein Motor</b></span><span class="wann">2023</span></li>
+          <li><span class="was"><b>Short Range Certificate</b><span>SRC, Seefunk</span></span><span class="wann"></span></li>
+          <li><span class="was"><b>Medizin an Bord</b><span>ISAF / World Sailing, RYA, OeSV</span></span><span class="wann"></span></li>
+          <li><span class="was"><b>Binnenausweis Segel und Motor</b></span><span class="wann">2004</span></li>
+        </ul>
       </div>
     </div>
   </section>
@@ -381,8 +424,8 @@
       <div>
         <h4>Törns</h4>
         <ul>
-          <li><a href="sardinien-korsika-2027/">Sardinien und Korsika 2027</a></li>
-          <li><a href="https://reservierung.timber-frame.ch/">aya reservieren</a></li>
+          <li><a href="sardinien-korsika-2027/">Sardinien und Korsika, Woche 1</a></li>
+          <li><a href="sardinien-korsika-2027/woche-2/">Sardinien und Korsika, Woche 2</a></li>
         </ul>
       </div>
       <div>
@@ -391,6 +434,7 @@
           <li><a href="#skipper">Skipper</a></li>
           <li><a href="#fragen">Fragen</a></li>
           <li><a href="https://www.timber-frame.ch/">timber-frame.ch, meine Werkstatt</a></li>
+          <li><a href="https://reservierung.timber-frame.ch/">aya-Reservierung</a></li>
         </ul>
       </div>
     </div>
