@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Törnzeit – Segeltörns im Mittelmeer mit kleiner Crew</title>
+<meta name="description" content="Meilentörns, Ausbildungstörns und Feriensegeln im Mittelmeer. Nächste Törns: Sardinien und Korsika, 4.–18. September 2027, ab Olbia. Skipper Patrick Heinzer.">
+<link rel="canonical" href="https://toernzeit.ch/">
+<meta property="og:title" content="Törnzeit – Segeltörns im Mittelmeer">
+<meta property="og:description" content="Meilentörns, Ausbildungstörns und Feriensegeln. Nächste Törns: Sardinien und Korsika, September 2027.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_CH">
+<meta property="og:url" content="https://toernzeit.ch/">
+<meta property="og:image" content="https://toernzeit.ch/bilder/hero-amwind.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F7F4EE">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1F2B'/%3E%3Cpath d='M8 38c8-10 16-10 24 0s16 10 24 0' fill='none' stroke='%2345C2AE' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preload" href="schrift/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* Archivo (SIL Open Font License), selbst gehostet: keine Anfragen an Google */
+  @font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:100 900;font-stretch:62% 125%;src:url(schrift/archivo.woff2) format("woff2-variations")}
+  :root{
+    --nacht:#F7F4EE;      /* Seitenhintergrund: Segeltuch */
+    --tiefe:#EDF2F4;      /* Flächen: heller Dunst */
+    --planke:#FFFFFF;     /* Karten */
+    --tuch:#0B1F2B;       /* Text: Tiefsee */
+    --dunst:#55707C;      /* Sekundärtext */
+    --smeraldo:#128F7E;   /* Akzent: Wasser der Costa Smeralda */
+    --smeraldo-hell:#45C2AE;
+    --linie:rgba(11,31,43,.12);
+    --font:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --rand:clamp(20px,5vw,64px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{font-family:var(--font);background:var(--nacht);color:var(--tuch);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--smeraldo);outline-offset:3px;border-radius:2px}
+  .innen{max-width:1240px;margin:0 auto;padding-inline:var(--rand)}
+
+  /* Schrift: eine Familie, zwei Breiten. Schmal und schwer wie Rumpfbeschriftung. */
+  h1,h2,h3,.schmal{font-stretch:62%;font-weight:800;line-height:.95;letter-spacing:-.005em}
+  h2{font-size:clamp(2.4rem,6vw,4.4rem);margin-bottom:1.2rem}
+  h3{font-size:clamp(1.6rem,2.6vw,2.1rem);line-height:1}
+  p.lead{font-size:1.15rem;color:var(--dunst);max-width:58ch}
+
+  /* Knöpfe */
+  .knopf{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 1.5rem;border-radius:999px;font-weight:600;font-size:.98rem;text-decoration:none;border:1.5px solid transparent;transition:background .2s,color .2s,border-color .2s;cursor:pointer}
+  .knopf.voll{background:var(--smeraldo);color:#fff}
+  .knopf.voll:hover{background:var(--tuch);color:#fff}
+  .knopf.rand{border-color:rgba(11,31,43,.35);color:var(--tuch)}
+  .knopf.rand:hover{border-color:var(--tuch);background:rgba(11,31,43,.06)}
+
+  /* Kopfzeile */
+  header{position:fixed;inset:0 0 auto 0;z-index:40;transition:background .25s,border-color .25s;border-bottom:1px solid transparent}
+  header.fest{background:rgba(247,244,238,.92);backdrop-filter:blur(12px);border-color:var(--linie)}
+  .leiste{display:flex;align-items:center;justify-content:space-between;height:76px;gap:1.5rem}
+  .marke{display:flex;align-items:center;gap:.55rem;text-decoration:none;font-stretch:62%;font-weight:800;font-size:1.7rem;letter-spacing:.01em}
+  .marke svg{width:34px;height:20px;flex:none}
+  nav.haupt{display:flex;gap:2rem;font-size:.95rem;font-weight:500}
+  nav.haupt a{text-decoration:none;color:rgba(11,31,43,.8);padding:.4rem 0;border-bottom:1.5px solid transparent}
+  nav.haupt a:hover{color:var(--tuch);border-color:var(--smeraldo)}
+  .rechts{display:flex;align-items:center;gap:.8rem}
+  .menue{display:none;width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(11,31,43,.35);background:none;color:var(--tuch);cursor:pointer;font-size:0}
+  .menue span,.menue span::before,.menue span::after{display:block;width:18px;height:2px;background:currentColor;margin:auto;position:relative;content:""}
+  .menue span::before{position:absolute;top:-6px}.menue span::after{position:absolute;top:6px}
+  @media(max-width:900px){
+    .menue{display:block}
+    .rechts .knopf{display:none}
+    nav.haupt{position:absolute;top:76px;left:0;right:0;flex-direction:column;gap:0;background:var(--nacht);border-bottom:1px solid var(--linie);padding:.5rem var(--rand) 1.2rem;display:none}
+    nav.haupt.offen{display:flex}
+    nav.haupt a{padding:.9rem 0;border-bottom:1px solid var(--linie);font-size:1.1rem}
+  }
+
+  /* Hero */
+  .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;isolation:isolate;overflow:hidden}
+  .hero picture,.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 45%;z-index:-2}
+  .hero::after{content:"";position:absolute;inset:0;z-index:-1;background:
+    linear-gradient(180deg,rgba(247,244,238,.35) 0%,rgba(247,244,238,0) 22%),
+    linear-gradient(0deg,var(--nacht) 0%,rgba(247,244,238,.92) 22%,rgba(247,244,238,.55) 45%,rgba(247,244,238,0) 70%)}
+  .hero .innen>*{min-width:0}
+  .hero .innen{width:100%;padding-block:120px clamp(40px,7vh,84px);display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:end}
+  .hero h1{font-size:clamp(5rem,17vw,15rem);line-height:.8;margin-left:-.04em;text-wrap:balance}
+  .hero p{font-size:clamp(1.05rem,1.6vw,1.3rem);max-width:46ch;margin:1.8rem 0 2rem;color:var(--tuch)}
+  .hero .knoepfe{display:flex;flex-wrap:wrap;gap:.8rem}
+
+  /* Die Uhr: das eine laute Element */
+  .uhr{border-left:2px solid var(--smeraldo);padding:.2rem 0 .2rem 1.4rem;min-width:250px}
+  .uhr .zahl{font-stretch:62%;font-weight:800;font-size:clamp(4rem,8vw,6.5rem);line-height:.85;color:var(--smeraldo);font-variant-numeric:tabular-nums}
+  .uhr .einheit{font-size:1.05rem;font-weight:600;margin-top:.5rem}
+  .uhr .ziel{color:var(--dunst);font-size:.95rem;margin-top:.15rem}
+  .uhr .rest{font-variant-numeric:tabular-nums;color:var(--tuch);font-size:.95rem;margin-top:.7rem}
+  @media(max-width:900px){
+    .hero::after{background:linear-gradient(0deg,var(--nacht) 0%,rgba(247,244,238,.94) 30%,rgba(247,244,238,.7) 52%,rgba(247,244,238,0) 78%)}
+    .hero .innen{grid-template-columns:1fr;gap:2.2rem}
+    .uhr{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;min-width:0}
+    .uhr .zahl{font-size:3.6rem}
+    .uhr .rest{display:none}
+  }
+
+  /* Eckdaten */
+  .eckdaten{border-block:1px solid var(--linie);background:var(--tiefe)}
+  .eckdaten dl{display:grid;grid-template-columns:repeat(4,1fr)}
+  .eckdaten div{padding:2rem 1.5rem 2rem 0;border-right:1px solid var(--linie);margin-right:1.5rem}
+  .eckdaten div:last-child{border:0;margin:0}
+  .eckdaten dt{font-stretch:62%;font-weight:800;font-size:clamp(2rem,3.4vw,2.9rem);line-height:1}
+  .eckdaten dd{color:var(--dunst);font-size:.95rem;margin-top:.4rem}
+  @media(max-width:760px){
+    .eckdaten dl{grid-template-columns:1fr 1fr}
+    .eckdaten div{border-right:0;margin:0;padding:1.4rem 1rem 1.4rem 0;border-bottom:1px solid var(--linie)}
+    .eckdaten div:nth-last-child(-n+2){border-bottom:0}
+  }
+
+  section.block{padding-block:clamp(72px,11vw,140px)}
+
+  /* Segelarten: Text in Spalten, keine Karten */
+  .arten{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3.5rem;border-top:1px solid var(--linie)}
+  .arten article{padding:2rem 2rem 0 0;border-right:1px solid var(--linie);margin-right:2rem}
+  .arten article:last-child{border:0;margin:0;padding-right:0}
+  .arten h3{margin-bottom:.9rem}
+  .arten p{color:var(--dunst)}
+  .arten .fuer{color:var(--tuch);margin-top:1rem;font-size:.95rem}
+  @media(max-width:860px){
+    .arten{grid-template-columns:1fr}
+    .arten article{border-right:0;margin:0;padding:1.8rem 0;border-bottom:1px solid var(--linie)}
+  }
+
+  /* Törns */
+  .toerns{background:var(--tiefe)}
+  .toernliste{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,40px);margin-top:3.5rem}
+  .toern{display:flex;flex-direction:column;background:var(--planke);border:1px solid var(--linie);border-radius:6px;overflow:hidden;text-decoration:none;transition:box-shadow .3s}
+  .toern:hover{box-shadow:0 18px 40px -24px rgba(11,31,43,.35)}
+  .toern .bild{position:relative;aspect-ratio:16/10;overflow:hidden}
+  .toern .bild img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  .toern:hover .bild img{transform:scale(1.04)}
+  .toern .art{position:absolute;left:16px;top:16px;background:var(--tuch);color:#fff;font-size:.82rem;font-weight:600;padding:.35rem .8rem;border-radius:999px}
+  .toern .text{padding:1.8rem;display:flex;flex-direction:column;gap:.8rem;flex:1}
+  .toern .datum{color:var(--smeraldo);font-weight:600;font-size:1rem}
+  .toern p{color:var(--dunst)}
+  .toern .fuss{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-top:auto;padding-top:1.2rem;border-top:1px solid var(--linie)}
+  .toern .preis{font-stretch:62%;font-weight:800;font-size:2.1rem;line-height:1}
+  .toern .preis small{display:block;font-stretch:100%;font-weight:400;font-size:.85rem;color:var(--dunst);margin-top:.3rem}
+  .toern .mehr{font-weight:600;border-bottom:1.5px solid var(--smeraldo);padding-bottom:2px}
+  @media(max-width:760px){.toernliste{grid-template-columns:1fr}}
+
+
+  /* Skipper */
+  .skipper .innen{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(32px,6vw,90px);align-items:center}
+  .skipper img{border-radius:6px;box-shadow:0 24px 50px -30px rgba(11,31,43,.45);aspect-ratio:4/3;object-fit:cover;width:100%}
+  .skipper p{color:var(--dunst);margin-top:1.1rem;max-width:56ch}
+  .skipper p.name{color:var(--smeraldo);font-weight:600;margin:0 0 .6rem}
+  .hinweis{background:rgba(18,143,126,.1);border-left:2px solid var(--smeraldo);padding:.7rem 1rem;color:var(--tuch)!important;font-size:.95rem}
+  @media(max-width:860px){.skipper .innen{grid-template-columns:1fr}}
+  .werdegang{margin-top:clamp(48px,7vw,90px);display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(32px,6vw,90px)}
+  .werdegang h3{margin-bottom:1.4rem}
+  .werdegang ol,.werdegang ul{list-style:none}
+  .werdegang li{display:grid;grid-template-columns:7.5rem 1fr auto;gap:1rem;padding:.85rem 0;border-top:1px solid var(--linie);font-size:.98rem;align-items:baseline}
+  .werdegang li:last-child{border-bottom:1px solid var(--linie)}
+  .werdegang .wann{color:var(--smeraldo);font-weight:600;font-variant-numeric:tabular-nums}
+  .werdegang .was b{display:block;font-weight:600}
+  .werdegang .was span{color:var(--dunst);font-size:.92rem}
+  .werdegang .sm{font-stretch:62%;font-weight:800;font-size:1.35rem;white-space:nowrap}
+  .werdegang .sm small{display:block;font-stretch:100%;font-weight:400;font-size:.78rem;color:var(--dunst);text-align:right}
+  .werdegang .ausweise li{grid-template-columns:1fr auto}
+  .werdegang .ausweise .wann{text-align:right}
+  .werdegang p.fuss{color:var(--dunst);font-size:.92rem;margin-top:1rem;max-width:60ch}
+  .werdegang .summe{margin-bottom:1.4rem;display:flex;gap:2rem}
+  .werdegang .summe div{font-stretch:62%;font-weight:800;font-size:2.4rem;line-height:1}
+  .werdegang .summe small{display:block;font-stretch:100%;font-weight:400;font-size:.9rem;color:var(--dunst);margin-top:.3rem}
+  @media(max-width:860px){
+    .werdegang{grid-template-columns:1fr}
+    .werdegang li{grid-template-columns:5.5rem 1fr auto;gap:.7rem}
+  }
+  @media(max-width:480px){
+    .werdegang li{grid-template-columns:1fr auto}
+    .werdegang ol .wann{grid-column:1/-1;font-size:.85rem;padding-bottom:.1rem}
+  }
+
+  /* Fragen */
+  .fragen{background:var(--tiefe)}
+  .fragen .innen{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,6vw,90px)}
+  details{border-bottom:1px solid var(--linie)}
+  details:first-of-type{border-top:1px solid var(--linie)}
+  summary{list-style:none;cursor:pointer;padding:1.4rem 2.5rem 1.4rem 0;font-weight:600;font-size:1.12rem;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:.2rem;top:50%;translate:0 -50%;font-size:1.6rem;font-weight:300;color:var(--smeraldo);transition:rotate .2s}
+  details[open] summary::after{rotate:45deg}
+  details p{color:var(--dunst);padding:0 2.5rem 1.5rem 0;max-width:62ch}
+  @media(max-width:860px){.fragen .innen{grid-template-columns:1fr}}
+
+  /* Kontakt und Fuss */
+  .kontakt{text-align:left}
+  .kontakt .wege{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.2rem}
+  footer{border-top:1px solid var(--linie);padding-block:3rem 2.2rem;color:var(--dunst);font-size:.95rem}
+  footer .spalten{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:2.5rem}
+  footer h4{color:var(--tuch);font-size:1rem;margin-bottom:.8rem;font-weight:600}
+  footer ul{list-style:none}
+  footer li{margin-bottom:.45rem}
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--tuch)}
+  footer .unten{margin-top:2.5rem;padding-top:1.4rem;border-top:1px solid var(--linie);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem;font-size:.88rem}
+  @media(max-width:760px){footer .spalten{grid-template-columns:1fr}}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<header id="kopf">
+  <div class="innen leiste">
+    <a class="marke" href="#top" aria-label="Törnzeit, zur Startseite">
+      <svg viewBox="0 0 68 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" aria-hidden="true"><path d="M4 14c10-12 20-12 30 0s20 12 30 0"/><path d="M4 30c10-12 20-12 30 0s20 12 30 0" stroke="#45C2AE"/></svg>
+      törnzeit
+    </a>
+    <nav class="haupt" id="nav" aria-label="Hauptnavigation">
+      <a href="#toerns">Törns</a>
+      <a href="#segelarten">Segelarten</a>
+      <a href="#skipper">Skipper</a>
+      <a href="#fragen">Fragen</a>
+    </nav>
+    <div class="rechts">
+      <a class="knopf voll" href="#kontakt">Platz anfragen</a>
+      <button class="menue" id="menue" aria-expanded="false" aria-controls="nav"><span></span>Menü</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <img class="bg" src="bilder/hero-amwind.jpg" alt="Am Wind vor der Küste: Gischt über dem Vorschiff, Sonne und tiefblaues Meer" fetchpriority="high">
+    <div class="innen">
+      <div>
+        <h1>Törnzeit.</h1>
+        <p>Meilen sammeln, segeln lernen oder einfach Ferien unter Segeln machen: Törns im Mittelmeer mit kleiner Crew. Anfängerinnen und Anfänger sind willkommen.</p>
+        <div class="knoepfe">
+          <a class="knopf voll" href="#toerns">Törns ansehen</a>
+          <a class="knopf rand" href="#kontakt">Platz anfragen</a>
+        </div>
+      </div>
+      <aside class="uhr" aria-label="Countdown bis zum nächsten Törn">
+        <div class="zahl" id="tage">4.9.</div>
+        <div>
+          <div class="einheit" id="einheit">September 2027</div>
+          <div class="ziel">bis Leinen los in Olbia</div>
+        </div>
+        <div class="rest" id="rest"></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="eckdaten" aria-label="Eckdaten der nächsten Törns">
+    <dl class="innen">
+      <div><dt>2 Wochen</dt><dd>Sardinien und Korsika, 4.–18. September 2027</dd></div>
+      <div><dt>48 Fuss</dt><dd>Beneteau Oceanis 46.1, Baujahr 2023</dd></div>
+      <div><dt>4 Kabinen</dt><dd>Doppelkabinen, jede mit eigener Nasszelle</dd></div>
+      <div><dt>CHF 650</dt><dd>pro Person und Woche</dd></div>
+    </dl>
+  </section>
+
+  <section class="block" id="segelarten">
+    <div class="innen">
+      <h2>Drei Arten,<br>einen Törn zu segeln.</h2>
+      <p class="lead">Nicht jede Crew will dasselbe vom Meer. Bei jedem Törn steht deshalb dabei, worum es in der Woche geht.</p>
+      <div class="arten">
+        <article>
+          <h3>Meilentörn</h3>
+          <p>Lange Schläge, Wachen, Navigation bei Tag und Nacht. Für alle, die Seemeilen und Erfahrung für den Hochseeausweis sammeln.</p>
+          <p class="fuer">Für dich, wenn du Meilen brauchst.</p>
+        </article>
+        <article>
+          <h3>Ausbildungstörn</h3>
+          <p>Hafenmanöver, Ankern, Segeltrimm, Törnplanung. Du übernimmst Schritt für Schritt mehr Verantwortung an Bord.</p>
+          <p class="fuer">Für dich, wenn du sicherer werden willst.</p>
+        </article>
+        <article>
+          <h3>Feriensegeln</h3>
+          <p>Von Bucht zu Bucht, baden, gut essen, abends im Hafen. Du packst so viel mit an, wie du Lust hast.</p>
+          <p class="fuer">Für dich, wenn du das Meer geniessen willst.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block toerns" id="toerns">
+    <div class="innen">
+      <h2>Die nächsten Törns.</h2>
+      <p class="lead">Zwei Wochen nacheinander mit demselben Schiff, der Andromaca. Start und Ziel ist jeweils Olbia. Du kannst eine Woche buchen oder beide.</p>
+
+      <div class="toernliste">
+        <a class="toern" href="sardinien-korsika-2027/">
+          <div class="bild">
+            <img src="bilder/la-maddalena.jpg" alt="Blick über die Inseln des La-Maddalena-Archipels" loading="lazy">
+            <span class="art">Feriensegeln</span>
+          </div>
+          <div class="text">
+            <div class="datum">4.–11. September 2027</div>
+            <h3>Sardinien und Korsika, Woche 1</h3>
+            <p>Costa Smeralda, La-Maddalena-Archipel und bei passendem Wetter hinüber nach Bonifacio. Kurze Distanzen, viele Badebuchten.</p>
+            <div class="fuss">
+              <div class="preis">CHF 650<small>pro Person</small></div>
+              <span class="mehr">Törn ansehen</span>
+            </div>
+          </div>
+        </a>
+
+        <a class="toern" href="sardinien-korsika-2027/woche-2/">
+          <div class="bild">
+            <img src="bilder/bonifacio.jpg" alt="Die Kreideklippen von Bonifacio auf Korsika" loading="lazy">
+            <span class="art">Feriensegeln</span>
+          </div>
+          <div class="text">
+            <div class="datum">11.–18. September 2027</div>
+            <h3>Sardinien und Korsika, Woche 2</h3>
+            <p>Dasselbe Revier mit neuer Crew: Lavezzi-Inseln, Bonifacio, Santa Teresa di Gallura. Doppelkabine zur Einzelnutzung möglich.</p>
+            <div class="fuss">
+              <div class="preis">CHF 650<small>pro Person, Kabine allein CHF 1200</small></div>
+              <span class="mehr">Törn ansehen</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block skipper" id="skipper">
+    <div class="innen">
+      <img src="bilder/andromaca-cockpit.jpg" alt="Cockpit der Andromaca mit Doppelsteuerstand und Bimini" loading="lazy">
+      <div>
+        <p class="name">Dein Skipper</p>
+        <h2>Patrick Heinzer</h2>
+        <p>Ich segle seit vielen Jahren, vor allem im Mittelmeer und auf dem Atlantik, und nehme am liebsten Crews mit, in denen Erfahrene und Neulinge zusammen an Bord sind. Ruhig, gut vorbereitet und ohne Drill: Jede und jeder darf ans Steuer, niemand muss.</p>
+        <p>Zu Hause bin ich in Hünenberg See am Zugersee. Wenn ich nicht auf dem Wasser bin, stehe ich in der Werkstatt und baue Möbel aus Massivholz.</p>
+      </div>
+    </div>
+
+    <div class="innen werdegang">
+      <div>
+        <h3>Nautischer Werdegang</h3>
+        <div class="summe">
+          <div>2400<small>Seemeilen seit 2016</small></div>
+          <div>60<small>Tage auf See</small></div>
+        </div>
+        <ol>
+          <li><span class="wann">Mai 2025</span><span class="was"><b>Teneriffa – Azoren</b><span>Meilentörn, Co-Skipper, 14 Tage</span></span><span class="sm">900<small>sm</small></span></li>
+          <li><span class="wann">Juli 2024</span><span class="was"><b>Skippertraining St. Malo</b><span>Crewmitglied, 7 Tage</span></span><span class="sm">150<small>sm</small></span></li>
+          <li><span class="wann">Mai 2024</span><span class="was"><b>Mallorca – Korsika – Sardinien</b><span>Meilentörn, Crewmitglied, 14 Tage</span></span><span class="sm">500<small>sm</small></span></li>
+          <li><span class="wann">Okt. 2023</span><span class="was"><b>Sukošan, Kroatien</b><span>Crewmitglied, 10 Tage</span></span><span class="sm">500<small>sm</small></span></li>
+          <li><span class="wann">Mai 2021</span><span class="was"><b>Šibenik, Kroatien</b><span>Crewmitglied, 8 Tage</span></span><span class="sm">200<small>sm</small></span></li>
+          <li><span class="wann">Juli 2016</span><span class="was"><b>Hawaii</b><span>Crewmitglied, 7 Tage</span></span><span class="sm">150<small>sm</small></span></li>
+        </ol>
+        <p class="fuss">Alle Meilenangaben sind gerundet. Vor 2016 kamen verschiedene Ferientörns dazu, zu denen ich heute keine verlässlichen Angaben mehr habe.</p>
+      </div>
+      <div>
+        <h3>Nautische Ausweise</h3>
+        <ul class="ausweise">
+          <li><span class="was"><b>Swiss Offshore Skipper</b><span>Sailing Yacht</span></span><span class="wann">2024</span></li>
+          <li><span class="was"><b>Hochseeschein Segel</b></span><span class="wann">2024</span></li>
+          <li><span class="was"><b>Hochseeschein Motor</b></span><span class="wann">2023</span></li>
+          <li><span class="was"><b>Short Range Certificate</b><span>SRC, Seefunk</span></span><span class="wann">2024</span></li>
+          <li><span class="was"><b>Medizin an Bord</b><span>ISAF / World Sailing, RYA, OeSV</span></span><span class="wann">2023</span></li>
+          <li><span class="was"><b>Binnenausweis Segel und Motor</b></span><span class="wann">2004</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block fragen" id="fragen">
+    <div class="innen">
+      <div>
+        <h2>Fragen vor dem Ablegen.</h2>
+        <p class="lead">Steht deine Frage nicht hier, schreib mir einfach.</p>
+      </div>
+      <div>
+        <details open>
+          <summary>Brauche ich Segelerfahrung?</summary>
+          <p>Nein. Beim Feriensegeln schauen wir uns am ersten Tag die Grundlagen an Bord an, danach kannst du überall mit anpacken. Bei Meilen- und Ausbildungstörns steht bei der Ausschreibung, was du mitbringen solltest.</p>
+        </details>
+        <details>
+          <summary>Wie wohnt man an Bord?</summary>
+          <p>Die Andromaca hat vier Doppelkabinen, jede mit eigener Nasszelle, dazu einen grossen Salon mit Sitzgruppe. In der zweiten Woche kannst du eine Doppelkabine auch allein nutzen.</p>
+        </details>
+        <details>
+          <summary>Wann und wo geht es los?</summary>
+          <p>Wir treffen uns am Samstagnachmittag zwischen 14 und 16 Uhr im Hafen von Olbia/Portisco. Der Törn endet am Samstag darauf gegen 9 Uhr mit dem Ausschiffen.</p>
+        </details>
+        <details>
+          <summary>Was muss ich mitnehmen?</summary>
+          <p>Auf der Törnseite findest du eine vollständige Packliste zum Abhaken, von den Dokumenten bis zur Segelkleidung.</p>
+        </details>
+        <details>
+          <summary>Steht die Route fest?</summary>
+          <p>Die Route ist ein Vorschlag. Wind und Wetter entscheiden mit, und die Überfahrt nach Korsika segeln wir nur, wenn es passt.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="block kontakt" id="kontakt">
+    <div class="innen">
+      <h2>Platz anfragen.</h2>
+      <p class="lead">Schreib mir, welche Woche dich interessiert und mit wie vielen Personen du kommst. Ich melde mich mit den freien Kabinen.</p>
+      <div class="wege">
+        <a class="knopf voll" href="mailto:patrick.heinzer@gmail.com?subject=Anfrage%20T%C3%B6rn%20Sardinien%202027&body=Woche%20(1%2C%202%20oder%20beide)%3A%0AAnzahl%20Personen%3A%0ASegelerfahrung%3A%0A">E-Mail schreiben</a>
+        <a class="knopf rand" href="tel:+41796899945">+41 79 689 99 45</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="innen">
+    <div class="spalten">
+      <div>
+        <a class="marke" href="#top">törnzeit</a>
+        <p style="margin-top:.8rem;max-width:38ch">Meilentörns, Ausbildungstörns und Feriensegeln im Mittelmeer.</p>
+        <p style="margin-top:.8rem">Patrick Heinzer<br>Eichmattstrasse 116a<br>6333 Hünenberg See</p>
+      </div>
+      <div>
+        <h4>Törns</h4>
+        <ul>
+          <li><a href="sardinien-korsika-2027/">Sardinien und Korsika, Woche 1</a></li>
+          <li><a href="sardinien-korsika-2027/woche-2/">Sardinien und Korsika, Woche 2</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Mehr</h4>
+        <ul>
+          <li><a href="#skipper">Skipper</a></li>
+          <li><a href="#fragen">Fragen</a></li>
+          <li><a href="https://www.timber-frame.ch/">timber-frame.ch, meine Werkstatt</a></li>
+          <li><a href="https://reservierung.timber-frame.ch/">aya-Reservierung</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="unten">
+      <span>© <span id="jahr">2026</span> Törnzeit</span>
+      <span>Mast- und Schotbruch</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Kopfzeile wird nach dem Hero deckend
+  const kopf=document.getElementById('kopf');
+  const fest=()=>kopf.classList.toggle('fest',scrollY>40);
+  addEventListener('scroll',fest,{passive:true});fest();
+
+  // Menü auf kleinen Bildschirmen
+  const knopf=document.getElementById('menue'),nav=document.getElementById('nav');
+  knopf.addEventListener('click',()=>{
+    const offen=nav.classList.toggle('offen');
+    knopf.setAttribute('aria-expanded',offen);
+    if(offen)kopf.classList.add('fest');
+  });
+  nav.addEventListener('click',e=>{if(e.target.tagName==='A'){nav.classList.remove('offen');knopf.setAttribute('aria-expanded',false)}});
+
+  // Countdown bis zum nächsten Törn. Neue Törns hier eintragen, der nächste zukünftige wird angezeigt.
+  const toerns=[
+    {start:'2027-09-04T14:00:00+02:00',ort:'Olbia'},
+    {start:'2027-09-11T14:00:00+02:00',ort:'Olbia'}
+  ];
+  const tage=document.getElementById('tage'),einheit=document.getElementById('einheit'),rest=document.getElementById('rest'),ziel=document.querySelector('.uhr .ziel');
+  function tick(){
+    const jetzt=Date.now();
+    const n=toerns.map(t=>({...t,ms:new Date(t.start)-jetzt})).filter(t=>t.ms>0).sort((a,b)=>a.ms-b.ms)[0];
+    if(!n){tage.textContent='Bald';einheit.textContent='neue Törns';ziel.textContent='Termine folgen';rest.textContent='';return}
+    const d=Math.floor(n.ms/864e5),h=Math.floor(n.ms%864e5/36e5),m=Math.floor(n.ms%36e5/6e4),s=Math.floor(n.ms%6e4/1e3);
+    tage.textContent=d;
+    einheit.textContent=d===1?'Tag':'Tage';
+    ziel.textContent='bis Leinen los in '+n.ort;
+    rest.textContent=String(h).padStart(2,'0')+' Std  '+String(m).padStart(2,'0')+' Min  '+String(s).padStart(2,'0')+' Sek';
+  }
+  tick();setInterval(tick,1000);
+  document.getElementById('jahr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
