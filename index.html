@@ -146,8 +146,8 @@
 
 
   /* Skipper */
-  .skipper .innen{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(32px,6vw,90px);align-items:center}
-  .skipper img{border-radius:6px;box-shadow:0 24px 50px -30px rgba(11,31,43,.45);aspect-ratio:4/3;object-fit:cover;width:100%}
+  .skipper .innen{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,6vw,90px);align-items:center}
+  .skipper img{border-radius:6px;box-shadow:0 24px 50px -30px rgba(11,31,43,.45);aspect-ratio:3/4;object-fit:cover;width:100%}
   .skipper p{color:var(--dunst);margin-top:1.1rem;max-width:56ch}
   .skipper p.name{color:var(--smeraldo);font-weight:600;margin:0 0 .6rem}
   .hinweis{background:rgba(18,143,126,.1);border-left:2px solid var(--smeraldo);padding:.7rem 1rem;color:var(--tuch)!important;font-size:.95rem}
@@ -329,10 +329,10 @@
 
   <section class="block skipper" id="skipper">
     <div class="innen">
-      <img src="bilder/andromaca-cockpit.jpg" alt="Cockpit der Andromaca mit Doppelsteuerstand und Bimini" loading="lazy">
+      <img src="bilder/skipper.jpg" alt="Patrick Heinzer am Steuer, Rettungsweste und Mütze, dahinter das Kielwasser" loading="lazy">
       <div>
         <p class="name">Dein Skipper</p>
-        <h2>Patrick</h2>
+        <h2>Patrick Heinzer</h2>
         <p>Ich segle seit vielen Jahren, vor allem im Mittelmeer und auf dem Atlantik, und nehme am liebsten Crews mit, in denen Erfahrene und Neulinge zusammen an Bord sind. Ruhig, gut vorbereitet und ohne Drill: Jede und jeder darf ans Steuer, niemand muss.</p>
         <p>Zu Hause bin ich in Hünenberg See am Zugersee. Wenn ich nicht auf dem Wasser bin, stehe ich in der Werkstatt und baue Möbel aus Massivholz.</p>
       </div>
@@ -479,5 +479,4 @@
   tick();setInterval(tick,1000);
   document.getElementById('jahr').textContent=new Date().getFullYear();
 </script>
-</body>
-</html>
+</bod
