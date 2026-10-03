@@ -2,8 +2,8 @@ import { getStore } from "@netlify/blobs";
 
 // Törns und ihre Kapazität. Neue Törns hier eintragen.
 export const TOERNS = {
-  "woche-1": { name: "Sardinien und Korsika, Woche 1", datum: "4.–11. September 2027", plaetze: 8, einzelkabine: false },
-  "woche-2": { name: "Sardinien und Korsika, Woche 2", datum: "11.–18. September 2027", plaetze: 8, einzelkabine: true },
+  "woche-1": { name: "Segeln ab Sardinien, KW 36", datum: "4.–11. September 2027", plaetze: 8, einzelkabine: false },
+  "woche-2": { name: "Segeln ab Sardinien, KW 37", datum: "11.–18. September 2027", plaetze: 8, einzelkabine: true },
 };
 
 export const STATUS = ["reserviert", "gebucht"];
