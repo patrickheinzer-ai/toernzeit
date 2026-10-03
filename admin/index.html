@@ -52,6 +52,10 @@
   .neu .breit{grid-column:1/-1}
   .check{display:flex;align-items:center;gap:.5rem;font-size:.9rem;min-height:38px}
   .check input{width:auto}
+  tr.edit td{background:#F3F7F8}
+  .editform{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.6rem;align-items:end;padding:.4rem 0}
+  .editform .breit{grid-column:1/-1}
+  .editform .knoepfe{display:flex;gap:.5rem;grid-column:1/-1}
   .meldung{position:fixed;left:50%;bottom:24px;translate:-50% 0;background:var(--text);color:#fff;padding:.7rem 1.2rem;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .2s;pointer-events:none}
   .meldung.zeig{opacity:1}
   @media(max-width:700px){
@@ -101,11 +105,13 @@ async function laden(){
 }
 function abmelden(){pw='';sessionStorage.removeItem('tz-admin');$('#login').hidden=false;$('#app').hidden=true;$('#abmelden').hidden=true}
 
+let zustand={};
 function zeichne(d){
+  zustand=d;
   $('#app').innerHTML=Object.entries(d).map(([id,t])=>{
     const g=t.plaetze?100*t.gebucht/t.plaetze:0, r=t.plaetze?100*t.reserviert/t.plaetze:0;
     const zeilen=t.eintraege.length?t.eintraege.map(e=>`
-      <tr>
+      <tr data-id="${e.id}" data-json="${esc(JSON.stringify(e))}">
         <td data-l="Name"><b>${esc(e.name)}</b><small>${esc(e.email)}${e.telefon?' · '+esc(e.telefon):''}</small>${e.bemerkung?`<small>«${esc(e.bemerkung)}»</small>`:''}</td>
         <td data-l="Plätze">${e.einzelkabine?'2 <small>1 Person, Kabine allein</small>':e.personen}</td>
         <td data-l="Status"><span class="status ${e.status}">${e.status}</span><small>${datum(e.erstellt)}${e.quelle==='admin'?' · manuell':''}</small></td>
@@ -113,6 +119,7 @@ function zeichne(d){
           ${e.status==='reserviert'
             ?`<button class="knopf klein voll" data-a="status" data-t="${id}" data-id="${e.id}" data-s="gebucht">Als gebucht bestätigen</button>`
             :`<button class="knopf klein" data-a="status" data-t="${id}" data-id="${e.id}" data-s="reserviert">Zurück auf reserviert</button>`}
+          <button class="knopf klein" data-a="bearbeiten" data-t="${id}" data-id="${e.id}">Bearbeiten</button>
           <button class="knopf klein rot" data-a="loeschen" data-t="${id}" data-id="${e.id}" data-n="${esc(e.name)}">Löschen</button>
         </div></td>
       </tr>`).join(''):`<tr><td colspan="4" class="leer">Noch keine Reservationen.</td></tr>`;
@@ -161,9 +168,28 @@ $('#abmelden').addEventListener('click',abmelden);
 $('#app').addEventListener('click',async e=>{
   const b=e.target.closest('button[data-a]');if(!b)return;
   if(b.dataset.a==='status'){if(await aktion({aktion:'status',toern:b.dataset.t,id:b.dataset.id,status:b.dataset.s}))melde(b.dataset.s==='gebucht'?'Als gebucht bestätigt':'Auf reserviert gesetzt')}
+  if(b.dataset.a==='bearbeiten'){
+    const tr=b.closest('tr'); const e=JSON.parse(tr.dataset.json); const t=zustand[b.dataset.t];
+    tr.classList.add('edit');
+    tr.innerHTML=`<td colspan="4"><form class="editform" data-t="${b.dataset.t}" data-id="${e.id}">
+      <div><label>Name</label><input name="name" value="${esc(e.name)}" required></div>
+      <div><label>E-Mail</label><input name="email" type="email" value="${esc(e.email)}"></div>
+      <div><label>Telefon</label><input name="telefon" value="${esc(e.telefon)}"></div>
+      <div><label>Personen</label><input name="personen" type="number" min="1" max="${t.plaetze}" value="${e.personen}"></div>
+      ${t.einzelkabine?`<label class="check"><input type="checkbox" name="einzelkabine" ${e.einzelkabine?'checked':''}> Kabine allein (2 Plätze)</label>`:''}
+      <div class="breit"><label>Bemerkung</label><input name="bemerkung" value="${esc(e.bemerkung)}"></div>
+      <div class="knoepfe"><button class="knopf voll" type="submit">Speichern</button><button class="knopf" type="button" data-a="abbrechen">Abbrechen</button></div>
+    </form></td>`;
+    tr.querySelector('input[name=name]').focus();
+  }
+  if(b.dataset.a==='abbrechen'){laden()}
   if(b.dataset.a==='loeschen'){if(confirm(`${b.dataset.n} wirklich löschen?`)&&await aktion({aktion:'loeschen',toern:b.dataset.t,id:b.dataset.id}))melde('Gelöscht')}
 });
 $('#app').addEventListener('submit',async e=>{
+  const ef=e.target.closest('form.editform');
+  if(ef){e.preventDefault();const fd=new FormData(ef);const body={aktion:'bearbeiten',toern:ef.dataset.t,id:ef.dataset.id};
+    for(const [k,v] of fd.entries())body[k]=v;body.einzelkabine=fd.get('einzelkabine')==='on';
+    if(await aktion(body))melde('Gespeichert');return}
   const f=e.target.closest('form.neu');if(!f)return;e.preventDefault();
   const fd=new FormData(f);const body={aktion:'neu',toern:f.dataset.t};
   for(const [k,v] of fd.entries())body[k]=v;body.einzelkabine=fd.get('einzelkabine')==='on';

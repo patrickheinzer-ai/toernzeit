@@ -196,9 +196,35 @@
   details p{color:var(--dunst);padding:0 2.5rem 1.5rem 0;max-width:62ch}
   @media(max-width:860px){.fragen .innen{grid-template-columns:1fr}}
 
-  /* Kontakt und Fuss */
-  .kontakt{text-align:left}
-  .kontakt .wege{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.2rem}
+  /* Reservieren und Fuss */
+  .reservieren{background:var(--tiefe)}
+  .res-raster{display:grid;grid-template-columns:1.3fr .7fr;gap:clamp(32px,6vw,90px);margin-top:2.5rem;align-items:start}
+  @media(max-width:860px){.res-raster{grid-template-columns:1fr}}
+  .res-form .reihe{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  @media(max-width:520px){.res-form .reihe{grid-template-columns:1fr}}
+  .res-form .feld{margin-bottom:1.1rem}
+  .res-form label{display:block;font-size:.85rem;font-weight:600;color:var(--dunst);margin-bottom:.35rem}
+  .res-form input,.res-form select,.res-form textarea{width:100%;font:inherit;font-size:1rem;padding:.75rem .9rem;border:1.5px solid var(--linie);border-radius:6px;background:var(--planke);color:var(--tuch)}
+  .res-form input:focus,.res-form select:focus,.res-form textarea:focus{outline:2px solid var(--smeraldo);outline-offset:1px;border-color:transparent}
+  .res-form textarea{min-height:90px;resize:vertical}
+  .res-form .check{display:flex;gap:.6rem;align-items:flex-start;font-size:.95rem;font-weight:400;color:var(--tuch)}
+  .res-form .check input{width:auto;margin-top:.25rem}
+  .res-form .klein{font-size:.82rem;color:var(--dunst);margin-top:.9rem;max-width:60ch}
+  .res-stand{display:flex;align-items:center;gap:.6rem;font-size:.9rem;color:var(--dunst);margin-top:.6rem}
+  .res-stand b{color:var(--tuch)}
+  .res-stand .punkte,.legende{display:inline-flex;gap:3px;align-items:center}
+  .res-stand .punkte i,.legende i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--smeraldo);display:inline-block}
+  .res-stand .punkte i.g,.legende i.g{background:var(--tuch);border-color:var(--tuch)}
+  .res-stand .punkte i.r,.legende i.r{background:var(--smeraldo)}
+  .legende{font-size:.82rem;color:var(--dunst);gap:.4rem;margin-top:1.4rem}
+  .legende i{margin-left:.6rem}.legende i:first-child{margin-left:0}
+  .res-meldung{padding:.9rem 1.1rem;border-radius:6px;margin-top:1rem;font-size:.95rem;display:none}
+  .res-meldung.ok{display:block;background:#DDF3EE;color:#0E6B5F}
+  .res-meldung.fehler{display:block;background:#FBE4DC;color:#8A2E12}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .res-seite h3{margin-bottom:.6rem}
+  .res-seite p{color:var(--dunst)}
+  .wege{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.2rem}
   footer{border-top:1px solid var(--linie);padding-block:3rem 2.2rem;color:var(--dunst);font-size:.95rem}
   footer .spalten{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:2.5rem}
   footer h4{color:var(--tuch);font-size:1rem;margin-bottom:.8rem;font-weight:600}
@@ -230,7 +256,7 @@
       <a href="#fragen">Fragen</a>
     </nav>
     <div class="rechts">
-      <a class="knopf voll" href="#kontakt">Platz anfragen</a>
+      <a class="knopf voll" href="#reservieren">Platz reservieren</a>
       <button class="menue" id="menue" aria-expanded="false" aria-controls="nav"><span></span>Menü</button>
     </div>
   </div>
@@ -246,7 +272,7 @@
         <p>Meilen sammeln, segeln lernen oder einfach Ferien unter Segeln machen: Törns im Mittelmeer mit kleiner Crew. Anfängerinnen und Anfänger sind willkommen.</p>
         <div class="knoepfe">
           <a class="knopf voll" href="#toerns">Törns ansehen</a>
-          <a class="knopf rand" href="#kontakt">Platz anfragen</a>
+          <a class="knopf rand" href="#reservieren">Platz reservieren</a>
         </div>
       </div>
       <aside class="uhr" aria-label="Countdown bis zum nächsten Törn">
@@ -409,13 +435,45 @@
     </div>
   </section>
 
-  <section class="block kontakt" id="kontakt">
+  <section class="block reservieren" id="reservieren">
     <div class="innen">
-      <h2>Platz anfragen.</h2>
-      <p class="lead">Schreib mir, welche Woche dich interessiert und mit wie vielen Personen du kommst. Ich melde mich mit den freien Kabinen.</p>
-      <div class="wege">
-        <a class="knopf voll" href="mailto:patrick.heinzer@gmail.com?subject=Anfrage%20T%C3%B6rn%20Sardinien%202027&body=Woche%20(1%2C%202%20oder%20beide)%3A%0AAnzahl%20Personen%3A%0ASegelerfahrung%3A%0A">E-Mail schreiben</a>
-        <a class="knopf rand" href="tel:+41796899945">+41 79 689 99 45</a>
+      <h2>Platz reservieren.</h2>
+      <p class="lead">Die Reservation ist kostenlos und unverbindlich: Du merkst dir einen Platz vor, ich melde mich innert weniger Tage. Fest gebucht ist der Platz, sobald die Anzahlung eingegangen ist.</p>
+      <div class="res-raster">
+        <form class="res-form" id="resForm" novalidate>
+          <div class="feld">
+            <label for="rToern">Törn</label>
+            <select id="rToern" name="toern" required><option value="">Törns werden geladen …</option></select>
+            <div class="res-stand" id="resStand" hidden>
+              <span class="punkte" id="resPunkte"></span><span id="resStandText"></span>
+            </div>
+          </div>
+          <div class="reihe">
+            <div class="feld"><label for="rName">Name</label><input id="rName" name="name" autocomplete="name" required></div>
+            <div class="feld"><label for="rPersonen">Personen</label><select id="rPersonen" name="personen"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+          </div>
+          <div class="reihe">
+            <div class="feld"><label for="rEmail">E-Mail</label><input id="rEmail" name="email" type="email" autocomplete="email" required></div>
+            <div class="feld"><label for="rTel">Telefon</label><input id="rTel" name="telefon" type="tel" autocomplete="tel"></div>
+          </div>
+          <div class="feld" id="einzelWrap" hidden>
+            <label class="check"><input type="checkbox" name="einzelkabine" id="einzelkabine"> Doppelkabine allein nutzen (CHF 1200.–, belegt 2 Plätze; nur bei 1 Person)</label>
+          </div>
+          <div class="feld"><label for="rBem">Bemerkung (optional)</label><textarea id="rBem" name="bemerkung" placeholder="Segelerfahrung, Wünsche, mit wem du eine Kabine teilst …"></textarea></div>
+          <div class="hp" aria-hidden="true"><label>Webseite<input name="website" tabindex="-1" autocomplete="off"></label></div>
+          <button class="knopf voll" type="submit" id="resKnopf">Platz reservieren</button>
+          <p class="klein">Mit dem Absenden erlaubst du mir, deine Angaben für diese Reservation zu speichern und dich zu kontaktieren. Keine Weitergabe an Dritte.</p>
+          <div class="res-meldung" id="resMeldung" role="status"></div>
+        </form>
+        <aside class="res-seite">
+          <h3>Lieber direkt?</h3>
+          <p>Schreib mir oder ruf an, wenn du Fragen hast oder beide Wochen zusammen möchtest.</p>
+          <div class="wege">
+            <a class="knopf rand" href="mailto:patrick.heinzer@gmail.com?subject=Anfrage%20T%C3%B6rn">E-Mail schreiben</a>
+            <a class="knopf rand" href="tel:+41796899945">+41 79 689 99 45</a>
+          </div>
+          <p class="legende"><i class="g"></i>gebucht <i class="r"></i>reserviert <i></i>frei</p>
+        </aside>
       </div>
     </div>
   </section>
@@ -493,15 +551,55 @@
   tick();setInterval(tick,1000);
   document.getElementById('jahr').textContent=new Date().getFullYear();
 
-  // Freie Plätze pro Törn
-  fetch('/api/plaetze').then(r=>r.json()).then(d=>{
+  // Reservationsformular
+  const rForm=document.getElementById('resForm'),rToern=document.getElementById('rToern'),rPers=document.getElementById('rPersonen'),
+        rEinzel=document.getElementById('einzelkabine'),rEinzelWrap=document.getElementById('einzelWrap'),rStand=document.getElementById('resStand'),
+        rPunkte=document.getElementById('resPunkte'),rStandText=document.getElementById('resStandText'),rKnopf=document.getElementById('resKnopf'),rMeld=document.getElementById('resMeldung');
+  let plaetze={};
+  function punkte(el,z){el.innerHTML='';for(let i=0;i<z.plaetze;i++){const d=document.createElement('i');if(i<z.gebucht)d.className='g';else if(i<z.gebucht+z.reserviert)d.className='r';el.appendChild(d)}}
+  function toernWahl(){
+    const z=plaetze[rToern.value]; if(!z){rStand.hidden=true;rEinzelWrap.hidden=true;return}
+    rStand.hidden=false; punkte(rPunkte,z);
+    rStandText.innerHTML=z.frei===0?'<b>Ausgebucht</b>, schreib mir für die Warteliste':`<b>${z.frei} von ${z.plaetze}</b> ${z.frei===1?'Platz':'Plätzen'} frei`;
+    [...rPers.options].forEach(o=>o.disabled=Number(o.value)>z.frei); if(rPers.selectedOptions[0]?.disabled)rPers.value='1';
+    rEinzelWrap.hidden=!z.einzelkabine; if(!z.einzelkabine)rEinzel.checked=false;
+    rKnopf.disabled=z.frei===0; rKnopf.textContent=z.frei===0?'Ausgebucht':'Platz reservieren';
+  }
+  function fuelleToerns(){
+    const akt=rToern.value; rToern.innerHTML='<option value="">Bitte wählen …</option>';
+    for(const [id,z] of Object.entries(plaetze)){const o=document.createElement('option');o.value=id;o.textContent=`${z.name} · ${z.datum} · ${z.frei===0?'ausgebucht':z.frei+' frei'}`;rToern.appendChild(o)}
+    const h=location.hash.match(/toern=([\w-]+)/); rToern.value=akt||(h&&plaetze[h[1]]?h[1]:''); toernWahl();
+  }
+  rToern.addEventListener('change',toernWahl);
+  rPers.addEventListener('change',()=>{rEinzel.disabled=rPers.value!=='1';if(rEinzel.disabled)rEinzel.checked=false});
+  rForm.addEventListener('submit',async e=>{
+    e.preventDefault(); rMeld.className='res-meldung';
+    const fd=new FormData(rForm); const body=Object.fromEntries(fd.entries()); body.einzelkabine=fd.get('einzelkabine')==='on';
+    const fehl=m=>{rMeld.textContent=m;rMeld.className='res-meldung fehler'};
+    if(!body.toern)return fehl('Bitte wähle einen Törn.');
+    if(!body.name||body.name.trim().length<2)return fehl('Bitte gib deinen Namen an.');
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(body.email||''))return fehl('Bitte gib eine gültige E-Mail-Adresse an.');
+    rKnopf.disabled=true; rKnopf.textContent='Wird gesendet …';
+    try{
+      const r=await fetch('/api/reservieren',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+      const d=await r.json();
+      if(!r.ok){fehl(d.fehler||'Das hat nicht geklappt. Bitte versuch es nochmals oder schreib mir direkt.');rKnopf.disabled=false;rKnopf.textContent='Platz reservieren';return}
+      plaetze[body.toern]={...plaetze[body.toern],...d}; const gew=body.toern; rForm.reset(); rToern.value=gew; fuelleToerns(); zeigeKarten();
+      rMeld.textContent='Danke, '+body.name.trim()+'! Dein Platz ist vorgemerkt. Ich melde mich in den nächsten Tagen per E-Mail bei dir.'; rMeld.className='res-meldung ok';
+    }catch(err){fehl('Keine Verbindung. Bitte versuch es später nochmals.');rKnopf.disabled=false;rKnopf.textContent='Platz reservieren'}
+  });
+
+  // Freie Plätze pro Törn auf den Karten
+  function zeigeKarten(){const d=plaetze;
     document.querySelectorAll('.toern .frei[data-toern]').forEach(el=>{
       const z=d[el.dataset.toern]; if(!z){el.remove();return}
       const p=el.querySelector('.punkte'); p.innerHTML='';
       for(let i=0;i<z.plaetze;i++){const dot=document.createElement('i'); if(i<z.gebucht)dot.className='g'; else if(i<z.gebucht+z.reserviert)dot.className='r'; p.appendChild(dot);}
       el.querySelector('.freitext').innerHTML=z.frei===0?'<b>Ausgebucht</b>, Warteliste möglich':`<b>${z.frei} von ${z.plaetze}</b> ${z.frei===1?'Platz':'Plätzen'} frei`;
     });
-  }).catch(()=>document.querySelectorAll('.toern .frei').forEach(el=>el.remove()));
+  }
+  fetch('/api/plaetze').then(r=>r.json()).then(d=>{plaetze=d;fuelleToerns();zeigeKarten()})
+    .catch(()=>{document.querySelectorAll('.toern .frei').forEach(el=>el.remove());rToern.innerHTML='<option value="">Törns konnten nicht geladen werden</option>'});
 </script>
 </body>
 </html>
