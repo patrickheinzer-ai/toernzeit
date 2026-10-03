@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Törnzeit – Reservationen</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1F2B'/%3E%3Cpath d='M8 38c8-10 16-10 24 0s16 10 24 0' fill='none' stroke='%2345C2AE' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  @font-face{font-family:"Archivo";font-style:normal;font-display:swap;font-weight:100 900;font-stretch:62% 125%;src:url(../schrift/archivo.woff2) format("woff2-variations")}
+  :root{--bg:#F7F4EE;--flaeche:#fff;--text:#0B1F2B;--dunst:#55707C;--akzent:#128F7E;--linie:rgba(11,31,43,.12);--warn:#B4532A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Archivo",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:16px}
+  .innen{max-width:1100px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+  h1,h2,h3{font-stretch:62%;font-weight:800;line-height:1}
+  h1{font-size:2.4rem} h2{font-size:1.7rem} h3{font-size:1.15rem}
+  a{color:var(--akzent)}
+  header{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 0;border-bottom:1px solid var(--linie);margin-bottom:2rem;gap:1rem;flex-wrap:wrap}
+  header .marke{font-stretch:62%;font-weight:800;font-size:1.5rem;text-decoration:none;color:var(--text)}
+  .knopf{display:inline-flex;align-items:center;min-height:38px;padding:0 1rem;border-radius:999px;border:1.5px solid var(--linie);background:#fff;color:var(--text);font:inherit;font-weight:600;font-size:.9rem;cursor:pointer}
+  .knopf.voll{background:var(--akzent);border-color:var(--akzent);color:#fff}
+  .knopf.rot{color:var(--warn)}
+  .knopf:disabled{opacity:.5;cursor:default}
+  .knopf.klein{min-height:30px;padding:0 .7rem;font-size:.82rem}
+  input,select,textarea{font:inherit;padding:.55rem .7rem;border:1.5px solid var(--linie);border-radius:6px;background:#fff;color:var(--text);width:100%}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--akzent);outline-offset:1px;border-color:transparent}
+  label{display:block;font-size:.85rem;font-weight:600;color:var(--dunst);margin-bottom:.3rem}
+  .feld{margin-bottom:.9rem}
+  .login{max-width:380px;margin:12vh auto;background:var(--flaeche);border:1px solid var(--linie);border-radius:10px;padding:2rem}
+  .login p{color:var(--dunst);margin:.4rem 0 1.4rem}
+  .fehler{color:var(--warn);font-size:.9rem;margin-top:.6rem;min-height:1.2em}
+  .toern{background:var(--flaeche);border:1px solid var(--linie);border-radius:10px;padding:1.6rem;margin-bottom:2rem}
+  .toern-kopf{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem}
+  .toern-kopf p{color:var(--dunst)}
+  .plaetze{display:flex;gap:1.6rem;align-items:baseline}
+  .plaetze div{font-stretch:62%;font-weight:800;font-size:2rem;line-height:1}
+  .plaetze small{display:block;font-stretch:100%;font-weight:400;font-size:.8rem;color:var(--dunst)}
+  .balken{height:8px;border-radius:4px;background:#E3E9EC;overflow:hidden;display:flex;margin:.6rem 0 1.4rem}
+  .balken .g{background:var(--akzent)} .balken .r{background:#8FD3C8}
+  table{width:100%;border-collapse:collapse;font-size:.93rem}
+  th{text-align:left;font-size:.78rem;color:var(--dunst);font-weight:600;padding:.4rem .5rem;border-bottom:1px solid var(--linie)}
+  td{padding:.7rem .5rem;border-bottom:1px solid var(--linie);vertical-align:top}
+  td small{display:block;color:var(--dunst);font-size:.82rem}
+  .status{display:inline-block;padding:.2rem .6rem;border-radius:999px;font-size:.8rem;font-weight:600}
+  .status.reserviert{background:#FFF1D6;color:#8A5A00}
+  .status.gebucht{background:#DDF3EE;color:#0E6B5F}
+  .aktionen{display:flex;gap:.4rem;flex-wrap:wrap}
+  .leer{color:var(--dunst);padding:1rem .5rem}
+  details{margin-top:1.2rem}
+  summary{cursor:pointer;font-weight:600;color:var(--akzent)}
+  .neu{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.8rem;margin-top:1rem;align-items:end}
+  .neu .breit{grid-column:1/-1}
+  .check{display:flex;align-items:center;gap:.5rem;font-size:.9rem;min-height:38px}
+  .check input{width:auto}
+  .meldung{position:fixed;left:50%;bottom:24px;translate:-50% 0;background:var(--text);color:#fff;padding:.7rem 1.2rem;border-radius:999px;font-size:.9rem;opacity:0;transition:opacity .2s;pointer-events:none}
+  .meldung.zeig{opacity:1}
+  @media(max-width:700px){
+    table,thead,tbody,tr,td,th{display:block}
+    thead{display:none}
+    tr{border-bottom:1px solid var(--linie);padding:.6rem 0}
+    td{border:0;padding:.25rem .3rem}
+    td[data-l]::before{content:attr(data-l) " ";font-size:.75rem;color:var(--dunst)}
+  }
+</style>
+</head>
+<body>
+<div class="innen">
+  <header>
+    <a class="marke" href="../">törnzeit</a>
+    <div><span style="color:var(--dunst);font-size:.9rem;margin-right:.8rem">Reservationen</span><button class="knopf" id="abmelden" hidden>Abmelden</button></div>
+  </header>
+
+  <section class="login" id="login">
+    <h2>Anmelden</h2>
+    <p>Verwaltung der Törn-Reservationen.</p>
+    <form id="loginForm">
+      <div class="feld"><label for="pw">Passwort</label><input id="pw" type="password" autocomplete="current-password" required></div>
+      <button class="knopf voll" type="submit">Anmelden</button>
+      <div class="fehler" id="loginFehler"></div>
+    </form>
+  </section>
+
+  <main id="app" hidden></main>
+</div>
+<div class="meldung" id="meldung"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+let pw=sessionStorage.getItem('tz-admin')||'';
+const kopf=()=>({'authorization':'Bearer '+pw,'content-type':'application/json'});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const datum=iso=>iso?new Date(iso).toLocaleDateString('de-CH',{day:'2-digit',month:'2-digit',year:'numeric'}):'';
+function melde(t){const m=$('#meldung');m.textContent=t;m.classList.add('zeig');clearTimeout(m._t);m._t=setTimeout(()=>m.classList.remove('zeig'),2500)}
+
+async function laden(){
+  const r=await fetch('/api/admin',{headers:kopf()});
+  if(r.status===401){abmelden();$('#loginFehler').textContent=pw?'Passwort falsch.':'';return}
+  const d=await r.json();
+  $('#login').hidden=true;$('#app').hidden=false;$('#abmelden').hidden=false;
+  zeichne(d);
+}
+function abmelden(){pw='';sessionStorage.removeItem('tz-admin');$('#login').hidden=false;$('#app').hidden=true;$('#abmelden').hidden=true}
+
+function zeichne(d){
+  $('#app').innerHTML=Object.entries(d).map(([id,t])=>{
+    const g=t.plaetze?100*t.gebucht/t.plaetze:0, r=t.plaetze?100*t.reserviert/t.plaetze:0;
+    const zeilen=t.eintraege.length?t.eintraege.map(e=>`
+      <tr>
+        <td data-l="Name"><b>${esc(e.name)}</b><small>${esc(e.email)}${e.telefon?' · '+esc(e.telefon):''}</small>${e.bemerkung?`<small>«${esc(e.bemerkung)}»</small>`:''}</td>
+        <td data-l="Plätze">${e.einzelkabine?'2 <small>1 Person, Kabine allein</small>':e.personen}</td>
+        <td data-l="Status"><span class="status ${e.status}">${e.status}</span><small>${datum(e.erstellt)}${e.quelle==='admin'?' · manuell':''}</small></td>
+        <td><div class="aktionen">
+          ${e.status==='reserviert'
+            ?`<button class="knopf klein voll" data-a="status" data-t="${id}" data-id="${e.id}" data-s="gebucht">Als gebucht bestätigen</button>`
+            :`<button class="knopf klein" data-a="status" data-t="${id}" data-id="${e.id}" data-s="reserviert">Zurück auf reserviert</button>`}
+          <button class="knopf klein rot" data-a="loeschen" data-t="${id}" data-id="${e.id}" data-n="${esc(e.name)}">Löschen</button>
+        </div></td>
+      </tr>`).join(''):`<tr><td colspan="4" class="leer">Noch keine Reservationen.</td></tr>`;
+    return `
+    <section class="toern">
+      <div class="toern-kopf">
+        <div><h2>${esc(t.name)}</h2><p>${esc(t.datum)}</p></div>
+        <div class="plaetze">
+          <div>${t.frei}<small>frei</small></div>
+          <div>${t.reserviert}<small>reserviert</small></div>
+          <div>${t.gebucht}<small>gebucht</small></div>
+          <div style="color:var(--dunst)">${t.plaetze}<small>Plätze total</small></div>
+        </div>
+      </div>
+      <div class="balken" title="dunkel: gebucht, hell: reserviert"><span class="g" style="width:${g}%"></span><span class="r" style="width:${r}%"></span></div>
+      <table>
+        <thead><tr><th>Name</th><th>Plätze</th><th>Status</th><th></th></tr></thead>
+        <tbody>${zeilen}</tbody>
+      </table>
+      <details>
+        <summary>Eintrag manuell erfassen</summary>
+        <form class="neu" data-t="${id}">
+          <div><label>Name</label><input name="name" required></div>
+          <div><label>E-Mail</label><input name="email" type="email"></div>
+          <div><label>Telefon</label><input name="telefon"></div>
+          <div><label>Personen</label><input name="personen" type="number" min="1" max="${t.plaetze}" value="1"></div>
+          <div><label>Status</label><select name="status"><option>reserviert</option><option>gebucht</option></select></div>
+          ${t.einzelkabine?`<label class="check"><input type="checkbox" name="einzelkabine"> Doppelkabine allein (2 Plätze)</label>`:''}
+          <div class="breit"><label>Bemerkung</label><input name="bemerkung"></div>
+          <div><button class="knopf voll" type="submit">Erfassen</button></div>
+        </form>
+      </details>
+    </section>`;
+  }).join('');
+}
+
+async function aktion(body){
+  const r=await fetch('/api/admin',{method:'POST',headers:kopf(),body:JSON.stringify(body)});
+  const d=await r.json();
+  if(!r.ok){melde(d.fehler||'Fehler');return false}
+  await laden();return true;
+}
+
+$('#loginForm').addEventListener('submit',e=>{e.preventDefault();pw=$('#pw').value;sessionStorage.setItem('tz-admin',pw);$('#loginFehler').textContent='';laden()});
+$('#abmelden').addEventListener('click',abmelden);
+$('#app').addEventListener('click',async e=>{
+  const b=e.target.closest('button[data-a]');if(!b)return;
+  if(b.dataset.a==='status'){if(await aktion({aktion:'status',toern:b.dataset.t,id:b.dataset.id,status:b.dataset.s}))melde(b.dataset.s==='gebucht'?'Als gebucht bestätigt':'Auf reserviert gesetzt')}
+  if(b.dataset.a==='loeschen'){if(confirm(`${b.dataset.n} wirklich löschen?`)&&await aktion({aktion:'loeschen',toern:b.dataset.t,id:b.dataset.id}))melde('Gelöscht')}
+});
+$('#app').addEventListener('submit',async e=>{
+  const f=e.target.closest('form.neu');if(!f)return;e.preventDefault();
+  const fd=new FormData(f);const body={aktion:'neu',toern:f.dataset.t};
+  for(const [k,v] of fd.entries())body[k]=v;body.einzelkabine=fd.get('einzelkabine')==='on';
+  if(await aktion(body))melde('Erfasst');
+});
+if(pw)laden();
+</script>
+</body>
+</html>

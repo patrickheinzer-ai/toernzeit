@@ -254,6 +254,36 @@
   footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
 
   :focus-visible{outline:2px solid var(--sea); outline-offset:2px;}
+
+  /* Reservation */
+  .navres{color:var(--sea) !important; font-weight:700;}
+  .res{display:grid; grid-template-columns:1fr 1.2fr; gap:56px; align-items:start;}
+  @media(max-width:860px){.res{grid-template-columns:1fr;}}
+  .res-stand{background:var(--sand); padding:32px; border-radius:6px;}
+  .res-stand .frei{font-size:clamp(44px,7vw,72px); font-weight:800; line-height:1; color:var(--sea-deep);}
+  .res-stand .frei small{display:block; font-size:15px; font-weight:400; color:#4A4A45; margin-top:6px;}
+  .res-balken{height:10px; border-radius:5px; background:#fff; overflow:hidden; display:flex; margin:22px 0 10px;}
+  .res-balken span{display:block; height:100%;}
+  .res-balken .g{background:var(--sea-deep);} .res-balken .r{background:var(--sea); opacity:.55;}
+  .res-legende{font-size:13px; color:#4A4A45; display:flex; gap:16px; flex-wrap:wrap;}
+  .res-legende i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:-1px;}
+  .res-stand p.erkl{font-size:15px; color:#4A4A45; margin:22px 0 0; line-height:1.6;}
+  .res-form .reihe{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:520px){.res-form .reihe{grid-template-columns:1fr;}}
+  .res-form label{display:block; font-size:13px; font-weight:700; color:#4A4A45; margin:0 0 6px;}
+  .res-form .f{margin-bottom:18px;}
+  .res-form input,.res-form select,.res-form textarea{width:100%; font:inherit; font-size:16px; padding:12px 14px; border:1px solid var(--line); border-radius:4px; background:#fff; color:var(--ink);}
+  .res-form input:focus,.res-form select:focus,.res-form textarea:focus{outline:2px solid var(--sea); outline-offset:1px; border-color:transparent;}
+  .res-form textarea{min-height:90px; resize:vertical;}
+  .res-form .check{display:flex; gap:10px; align-items:flex-start; font-size:15px; font-weight:400; color:var(--ink);}
+  .res-form .check input{width:auto; margin-top:4px;}
+  .res-form button{font:inherit; font-size:16px; font-weight:700; background:var(--sea-deep); color:#fff; border:0; border-radius:999px; padding:14px 28px; cursor:pointer;}
+  .res-form button:disabled{opacity:.6; cursor:default;}
+  .res-form .hinweis{font-size:13px; color:#4A4A45; margin-top:12px;}
+  .res-meldung{padding:16px 18px; border-radius:4px; margin-top:16px; font-size:15px; display:none;}
+  .res-meldung.ok{display:block; background:#DDF3EE; color:#0E6B5F;}
+  .res-meldung.fehler{display:block; background:#FBE4DC; color:#8A2E12;}
+  .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
 </style>
 </head>
 <body>
@@ -269,6 +299,7 @@
       <li><a href="#packliste">Packliste</a></li>
       <li><a href="#wetter">Wetter</a></li>
       <li><a href="#galerie">Galerie</a></li>
+      <li><a href="#reservieren" class="navres">Reservieren</a></li>
     </ul>
   </div>
 </nav>
@@ -591,6 +622,43 @@
   <p class="cap" id="lightboxCap"></p>
 </div>
 
+<section id="reservieren">
+  <div class="wrap">
+    <p class="kicker">Mitsegeln</p>
+    <div class="section-head">
+      <h2>Platz reservieren</h2>
+      <p>Die Reservation ist kostenlos und unverbindlich: Du merkst dir einen Platz vor, ich melde mich innert weniger Tage bei dir. Fest gebucht ist der Platz, sobald die Anzahlung eingegangen ist.</p>
+    </div>
+    <div class="res">
+      <div class="res-stand" id="resStand">
+        <div class="frei"><span id="resFrei">…</span><small id="resFreiText">Plätze frei</small></div>
+        <div class="res-balken" aria-hidden="true"><span class="g" id="resBalkenG"></span><span class="r" id="resBalkenR"></span></div>
+        <div class="res-legende"><span><i style="background:var(--sea-deep)"></i>gebucht</span><span><i style="background:var(--sea);opacity:.55"></i>reserviert</span><span><i style="background:#fff;border:1px solid var(--line)"></i>frei</span></div>
+        <p class="erkl"><b>Reserviert</b> heisst: Du hast mündlich oder hier zugesagt, der Platz ist für dich vorgemerkt.<br><b>Gebucht</b> heisst: Die Anzahlung ist da, der Platz ist fix.</p>
+      </div>
+      <form class="res-form" id="resForm" novalidate>
+        <input type="hidden" name="toern" value="woche-2">
+        <div class="reihe">
+          <div class="f"><label for="rName">Name</label><input id="rName" name="name" autocomplete="name" required></div>
+          <div class="f"><label for="rPersonen">Personen</label><select id="rPersonen" name="personen"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+        </div>
+        <div class="reihe">
+          <div class="f"><label for="rEmail">E-Mail</label><input id="rEmail" name="email" type="email" autocomplete="email" required></div>
+          <div class="f"><label for="rTel">Telefon</label><input id="rTel" name="telefon" type="tel" autocomplete="tel"></div>
+        </div>
+          <div class="f check-wrap" id="einzelWrap">
+            <label class="check"><input type="checkbox" name="einzelkabine" id="einzelkabine"> Doppelkabine allein nutzen (CHF 1200.–, belegt 2 Plätze; nur bei 1 Person)</label>
+          </div>
+        <div class="f"><label for="rBem">Bemerkung (optional)</label><textarea id="rBem" name="bemerkung" placeholder="Segelerfahrung, Wünsche, mit wem du eine Kabine teilst …"></textarea></div>
+        <div class="hp" aria-hidden="true"><label>Webseite<input name="website" tabindex="-1" autocomplete="off"></label></div>
+        <button type="submit" id="resKnopf">Platz reservieren</button>
+        <p class="hinweis">Mit dem Absenden erlaubst du mir, deine Angaben für diese Reservation zu speichern und dich zu kontaktieren. Keine Weitergabe an Dritte.</p>
+        <div class="res-meldung" id="resMeldung" role="status"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <span>Segeltörn Sardinien 2027 · Andromaca</span>
@@ -652,6 +720,38 @@
   });
 </script>
 
+<script>
+(function(){
+  const T='woche-2';
+  const frei=document.getElementById('resFrei'), freiText=document.getElementById('resFreiText');
+  const bg=document.getElementById('resBalkenG'), br=document.getElementById('resBalkenR');
+  const form=document.getElementById('resForm'), knopf=document.getElementById('resKnopf'), meld=document.getElementById('resMeldung');
+  const pers=document.getElementById('rPersonen'), einzel=document.getElementById('einzelkabine');
+  function zeige(z){
+    frei.textContent=z.frei; freiText.textContent=(z.frei===1?'Platz frei':'Plätze frei')+' von '+z.plaetze;
+    bg.style.width=(100*z.gebucht/z.plaetze)+'%'; br.style.width=(100*z.reserviert/z.plaetze)+'%';
+    if(z.frei===0){knopf.disabled=true; knopf.textContent='Ausgebucht'; freiText.textContent='Plätze frei, schreib mir für die Warteliste';}
+    [...pers.options].forEach(o=>o.disabled=Number(o.value)>z.frei);
+  }
+  fetch('/api/plaetze').then(r=>r.json()).then(d=>{if(d[T])zeige(d[T]);}).catch(()=>{frei.textContent='–';});
+  if(einzel){ pers.addEventListener('change',()=>{einzel.disabled=pers.value!=='1'; if(einzel.disabled)einzel.checked=false;}); }
+  form.addEventListener('submit',async e=>{
+    e.preventDefault(); meld.className='res-meldung';
+    const fd=new FormData(form); const body=Object.fromEntries(fd.entries()); body.einzelkabine=fd.get('einzelkabine')==='on';
+    if(!body.name||body.name.trim().length<2){meld.textContent='Bitte gib deinen Namen an.'; meld.className='res-meldung fehler'; return;}
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(body.email||'')){meld.textContent='Bitte gib eine gültige E-Mail-Adresse an.'; meld.className='res-meldung fehler'; return;}
+    knopf.disabled=true; const alt=knopf.textContent; knopf.textContent='Wird gesendet …';
+    try{
+      const r=await fetch('/api/reservieren',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+      const d=await r.json();
+      if(!r.ok){meld.textContent=d.fehler||'Das hat nicht geklappt. Bitte versuch es nochmals oder schreib mir direkt.'; meld.className='res-meldung fehler'; knopf.disabled=false; knopf.textContent=alt; return;}
+      zeige(d); form.reset();
+      meld.textContent='Danke, '+body.name.trim()+'! Dein Platz ist vorgemerkt. Ich melde mich in den nächsten Tagen per E-Mail bei dir.'; meld.className='res-meldung ok';
+      knopf.textContent=alt; knopf.disabled=d.frei===0;
+    }catch(err){meld.textContent='Keine Verbindung. Bitte versuch es später nochmals.'; meld.className='res-meldung fehler'; knopf.disabled=false; knopf.textContent=alt;}
+  });
+})();
+</script>
 </body>
 </html>
 

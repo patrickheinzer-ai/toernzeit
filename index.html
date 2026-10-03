@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Törnzeit – Segeltörns im Mittelmeer mit kleiner Crew</title>
-<meta name="description" content="Meilentörns, Ausbildungstörns und Feriensegeln. Nächste Törns: Sardinien und Korsika, 4.–18. September 2027, ab Olbia. Skipper Patrick Heinzer.">
+<meta name="description" content="Meilentörns, Ausbildungstörns und Feriensegeln im Mittelmeer. Nächste Törns: Sardinien und Korsika, 4.–18. September 2027, ab Olbia. Skipper Patrick Heinzer.">
 <link rel="canonical" href="https://toernzeit.ch/">
 <meta property="og:title" content="Törnzeit – Segeltörns im Mittelmeer">
 <meta property="og:description" content="Meilentörns, Ausbildungstörns und Feriensegeln. Nächste Törns: Sardinien und Korsika, September 2027.">
@@ -137,6 +137,13 @@
   .toern .art{position:absolute;left:16px;top:16px;background:var(--tuch);color:#fff;font-size:.82rem;font-weight:600;padding:.35rem .8rem;border-radius:999px}
   .toern .text{padding:1.8rem;display:flex;flex-direction:column;gap:.8rem;flex:1}
   .toern .datum{color:var(--smeraldo);font-weight:600;font-size:1rem}
+  .toern .frei{display:flex;align-items:center;gap:.6rem;font-size:.9rem;color:var(--dunst);margin-top:-.2rem}
+  .toern .frei .punkte{display:flex;gap:3px}
+  .toern .frei .punkte i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--smeraldo);display:block}
+  .toern .frei .punkte i.g{background:var(--tuch);border-color:var(--tuch)}
+  .toern .frei .punkte i.r{background:var(--smeraldo)}
+  .toern .frei b{color:var(--tuch)}
+  .toern .frei .freitext{padding:0;display:inline}
   .toern p{color:var(--dunst)}
   .toern .fuss{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-top:auto;padding-top:1.2rem;border-top:1px solid var(--linie)}
   .toern .preis{font-stretch:62%;font-weight:800;font-size:2.1rem;line-height:1}
@@ -299,6 +306,7 @@
           </div>
           <div class="text">
             <div class="datum">4.–11. September 2027</div>
+            <div class="frei" data-toern="woche-1"><span class="punkte"></span><span class="freitext">Plätze werden geladen …</span></div>
             <h3>Sardinien und Korsika, Woche 1</h3>
             <p>Costa Smeralda, La-Maddalena-Archipel und bei passendem Wetter hinüber nach Bonifacio. Kurze Distanzen, viele Badebuchten.</p>
             <div class="fuss">
@@ -315,6 +323,7 @@
           </div>
           <div class="text">
             <div class="datum">11.–18. September 2027</div>
+            <div class="frei" data-toern="woche-2"><span class="punkte"></span><span class="freitext">Plätze werden geladen …</span></div>
             <h3>Sardinien und Korsika, Woche 2</h3>
             <p>Dasselbe Revier mit neuer Crew: Lavezzi-Inseln, Bonifacio, Santa Teresa di Gallura. Doppelkabine zur Einzelnutzung möglich.</p>
             <div class="fuss">
@@ -329,10 +338,10 @@
 
   <section class="block skipper" id="skipper">
     <div class="innen">
-      <img src="bilder/skipper.jpg" alt="Patrick am Steuer, Rettungsweste und Mütze, dahinter das Kielwasser" loading="lazy">
+      <img src="bilder/skipper.jpg" alt="Patrick Heinzer am Steuer, Rettungsweste und Mütze, dahinter das Kielwasser" loading="lazy">
       <div>
         <p class="name">Dein Skipper</p>
-        <h2>Patrick</h2>
+        <h2>Patrick Heinzer</h2>
         <p>Ich segle seit vielen Jahren, vor allem im Mittelmeer und auf dem Atlantik, und nehme am liebsten Crews mit, in denen Erfahrene und Neulinge zusammen an Bord sind. Ruhig, gut vorbereitet und ohne Drill: Jede und jeder darf ans Steuer, niemand muss.</p>
         <p>Zu Hause bin ich in Hünenberg See am Zugersee. Wenn ich nicht auf dem Wasser bin, stehe ich in der Werkstatt und baue Möbel aus Massivholz.</p>
       </div>
@@ -411,6 +420,11 @@
     </div>
   </section>
 
+
+  <!-- Netlify Forms: dient nur der E-Mail-Benachrichtigung bei neuen Reservationen, wird von /api/reservieren befüllt -->
+  <form name="reservation" netlify netlify-honeypot="bot-field" hidden>
+    <input name="toern"><input name="name"><input name="email"><input name="telefon"><input name="personen"><textarea name="bemerkung"></textarea><input name="bot-field">
+  </form>
 </main>
 
 <footer>
@@ -478,5 +492,16 @@
   }
   tick();setInterval(tick,1000);
   document.getElementById('jahr').textContent=new Date().getFullYear();
+
+  // Freie Plätze pro Törn
+  fetch('/api/plaetze').then(r=>r.json()).then(d=>{
+    document.querySelectorAll('.toern .frei[data-toern]').forEach(el=>{
+      const z=d[el.dataset.toern]; if(!z){el.remove();return}
+      const p=el.querySelector('.punkte'); p.innerHTML='';
+      for(let i=0;i<z.plaetze;i++){const dot=document.createElement('i'); if(i<z.gebucht)dot.className='g'; else if(i<z.gebucht+z.reserviert)dot.className='r'; p.appendChild(dot);}
+      el.querySelector('.freitext').innerHTML=z.frei===0?'<b>Ausgebucht</b>, Warteliste möglich':`<b>${z.frei} von ${z.plaetze}</b> ${z.frei===1?'Platz':'Plätzen'} frei`;
+    });
+  }).catch(()=>document.querySelectorAll('.toern .frei').forEach(el=>el.remove()));
 </script>
-</bod
+</body>
+</html>
